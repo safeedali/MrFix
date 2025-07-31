@@ -1,0 +1,21 @@
+<!-- complaint_reply.html -->
+{% extends 'customertemp/customer_home.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Your Complaint Responses</h2>
+
+        <div class="list-group">
+            {% for complaint in complaints %}
+                <div class="list-group-item mb-3">
+                    <p><strong>Complaint:</strong> {{ complaint.complaints }}</p>
+                    <p><strong>Date:</strong> {{ complaint.date }}</p>
+                    <p><strong>Reply:</strong> {{ complaint.reply }}</p>
+                    {% if complaint.Complaints_image %}
+                        <img src="{{ complaint.Complaints_image.url }}" width="200" class="img-thumbnail mt-2">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+</div>
+{% endblock %}

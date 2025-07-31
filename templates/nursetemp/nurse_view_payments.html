@@ -1,0 +1,98 @@
+{% extends 'nursetemp/nurseHome.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .payment-table-container {
+        margin: 40px auto;
+        max-width: 1000px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .payment-header {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 16px;
+        text-align: left;
+        font-size: 15px;
+    }
+
+    th {
+        background: linear-gradient(to right, #007bff, #00c6ff);
+        color: white;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .paid-label {
+        background-color: #17a2b8;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 500;
+    }
+</style>
+
+<div class="payment-table-container">
+    <h2 class="payment-header">Payment Details for Your Bookings</h2>
+
+    {% if bookings %}
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Booking Date</th>
+                <th>Time</th>
+                <th>Patient Details</th>
+                <th>Payment Status</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.customer.name }}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.start_time }} - {{ booking.end_time }}</td>
+                <td>{{ booking.patient_name }} ({{ booking.patient_age }} yrs)</td>
+                <td>
+                    {% if booking.nursebookingpayment %}
+                        <span class="paid-label">Paid</span>
+                    {% else %}
+                        Not Paid
+                    {% endif %}
+                </td>
+                <td>
+                    {% if booking.nursebookingpayment %}
+                        ₹{{ booking.nursebookingpayment.amount }}
+                    {% else %}
+                        ₹0
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p style="text-align: center;">No bookings found.</p>
+    {% endif %}
+</div>
+{% endblock %}

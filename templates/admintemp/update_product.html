@@ -1,0 +1,15 @@
+{% extends 'admintemp/admin_home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container mt-5">
+  <h2>Update Product: {{ product.name }}</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="{% url 'view_product' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+{% endblock %}

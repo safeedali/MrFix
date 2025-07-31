@@ -1,0 +1,21 @@
+{% extends 'customertemp/customer_home.html' %}
+{% block content %}
+
+<div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Make Payment</h4>
+            <p>Service with Nurse: <strong>{{ booking.nurse.name }}</strong></p>
+            <p>Date: <strong>{{ booking.date }}</strong></p>
+            <p>Status: <strong>{{ booking.status }}</strong></p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Pay Now</button>
+                <a href="{% url 'view_my_bookings' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

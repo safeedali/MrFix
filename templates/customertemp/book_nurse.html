@@ -1,0 +1,125 @@
+    {% extends 'customertemp/customer_home.html' %}
+    {% load static %}
+    {% block content %}
+
+    <style>
+        .booking-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .booking-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px 40px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .booking-header {
+            background: linear-gradient(135deg, #007bff, #4facfe);
+            padding: 20px;
+            border-radius: 16px 16px 0 0;
+            color: white;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        form p {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: border-color 0.3s;
+            font-size: 15px;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: #007bff;
+            background: #fff;
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .form-error {
+            color: red;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+    </style>
+
+    <div class="booking-container">
+        <div class="booking-card">
+            <div class="booking-header">
+                Book Nurse: {{ nurse.name }}
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                <p>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="form-error">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </p>
+                {% endfor %}
+
+                <div style="text-align: right;">
+                    <a href="{% url 'view_nurses' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% endblock %}

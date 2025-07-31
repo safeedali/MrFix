@@ -1,0 +1,21 @@
+{% extends 'admintemp/admin_home.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Reply to Complaint from {{ complaint.user.username }}</h2>
+
+    <div class="mb-3">
+        <strong>Complaint:</strong>
+        <p class="border p-3 bg-light">{{ complaint.complaints }}</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="reply" class="form-label"><strong>Reply:</strong></label>
+            <textarea name="reply" id="reply" rows="5" class="form-control">{{ complaint.reply }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit Reply</button>
+        <a href="{% url 'view_complaints' %}" class="btn btn-secondary">Back to Complaints</a>
+    </form>
+</div>
+{% endblock %}

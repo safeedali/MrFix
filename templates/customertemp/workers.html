@@ -1,0 +1,31 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+  {% for i in data %}
+  <div class="col-md-4 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-primary text-white">
+        {{ i.work_type }}
+      </div>
+      <div class="card-body">
+        <div class="text-center mb-3">
+          {% if i.id_card %}
+          <img src="{{ i.id_card.url }}" alt="image" class="img-fluid rounded" style="max-height: 150px;">
+          {% else %}
+          <img src="https://via.placeholder.com/150" alt="No Image" class="img-fluid rounded">
+          {% endif %}
+        </div>
+        <h5 class="card-title">{{ i.name }}</h5>
+        <p class="card-text"><strong>Contact:</strong> {{ i.contact_no }}</p>
+        <p class="card-text"><strong>Email:</strong> {{ i.email }}</p>
+        <p class="card-text"><strong>Address:</strong> {{ i.address }}</p>
+      </div>
+      <div class="card-footer text-center">
+        <a href="{% url 'view_schedule' i.id %}" class="btn btn-success">Book Now</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">My Appointments</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Employee Name</th>
+                            <th>Service Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Amount</th>
+                            <th>Approval</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in appointment %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ a.worker.name }}</td>
+                            <td>{{ a.schedule.date }}</td>
+                            <td>{{ a.schedule.start_time }}</td>
+                            <td>{{ a.schedule.end_time }}</td>
+                            <td>₹ {{ a.amount }}</td>
+
+
+                            <td>
+                                {% if a.Approvel_status %}
+                                <button class="btn btn-success btn-sm">Approved</button>
+                                {% else %}
+                                <button class="btn btn-secondary btn-sm">Waiting</button>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center">No Appointments Found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

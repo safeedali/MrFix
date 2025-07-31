@@ -1,0 +1,70 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .payment-card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        padding: 30px;
+        background: #fff;
+        transition: transform 0.3s;
+    }
+
+    .payment-card:hover {
+        transform: scale(1.02);
+    }
+
+    .payment-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .payment-details {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .btn-pay {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .amount-box {
+        background: #f2f2f2;
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<div class="col-lg-6 mx-auto">
+    <div class="payment-card">
+        <div class="payment-header">
+            <h3 class="card-title">Confirm Your Payment</h3>
+            <img src="{% static 'images/payment_icon.png' %}" alt="Payment" width="80" class="my-3">
+        </div>
+
+        <div class="payment-details">
+            <p><strong>Service Provider:</strong> {{ appointment.worker.name }}</p>
+            <p><strong>Service Date:</strong> {{ appointment.schedule.date }}</p>
+            <p><strong>Start Time:</strong> {{ appointment.schedule.start_time }}</p>
+            <p><strong>End Time:</strong> {{ appointment.schedule.end_time }}</p>
+        </div>
+
+        <div class="amount-box mb-4">
+            Amount to Pay: ₹{{ appointment.amount }}
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-pay mb-2">Pay Now</button>
+            <a href="{% url 'Myappointment_view' %}" class="btn btn-secondary btn-pay">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

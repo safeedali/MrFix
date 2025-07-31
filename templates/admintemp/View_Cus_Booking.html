@@ -1,0 +1,51 @@
+{% extends 'admintemp/admin_home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Customer Bookings</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Worker Name</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                            <th>Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in Customers_Booking %}
+                        <tr>
+                            <td>{{ i.customer.name }}</td>
+                            <td>{{ i.worker.name }}</td>
+                            <td>{{ i.amount }}</td>
+                            <td>{{ i.status }}</td>
+                            <td>
+                                {% if i.Approvel_status == 0 %}
+                                <a class="btn btn-primary" href="{% url 'approve_booking' i.id %}">Approve Booking</a>
+                                {% else %}
+                                <button class="btn btn-success">Approved</button>
+                                {% endif %}
+                            </td>
+                          <td>
+                                {% if i.status == 'Confirmed' %}
+                                    <a href="{% url 'pay_to_worker' i.id %}" class="btn btn-primary btn-sm">Pay to Worker</a>
+                                {% elif i.status == 'Completed' %}
+                                    <button class="btn btn-success btn-sm" disabled>Paid</button>
+                                {% else %}
+                                    <button class="btn btn-secondary btn-sm" disabled>Not Eligible</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

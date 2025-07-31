@@ -1,0 +1,31 @@
+{% extends 'workertemp/worker_home.html' %}
+{% block content %}
+
+<h3>Feedback from Customers</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Subject</th>
+            <th>Feedback</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in feedbacks %}
+        <tr>
+            <td>{{ f.user.username }}</td>
+            <td>{{ f.subject }}</td>
+            <td>{{ f.feedback }}</td>
+            <td>{{ f.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">No Feedback Available</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

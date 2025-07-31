@@ -1,0 +1,36 @@
+{% extends 'admintemp/admin_home.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">All Complaints</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Complaint</th>
+                <th>Date</th>
+                <th>Image</th>
+                <th>Reply</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in complaints %}
+            <tr>
+                <td>{{ c.user.username }}</td>
+                <td>{{ c.complaints }}</td>
+                <td>{{ c.date }}</td>
+                <td>
+                    {% if c.Complaints_image %}
+                    <img src="{{ c.Complaints_image.url }}" width="100" />
+                    {% else %}
+                    No Image
+                    {% endif %}
+                </td>
+                <td>{{ c.reply|default:"No reply yet" }}</td>
+                <td><a href="{% url 'reply_complaint' c.id %}" class="btn btn-sm btn-primary">Reply</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

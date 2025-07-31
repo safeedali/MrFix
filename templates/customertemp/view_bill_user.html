@@ -1,0 +1,66 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="col-md-8 grid-margin stretch-card mx-auto">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">Your Bills</h4>
+
+            {% if bills %}
+                {% for bill in bills %}
+                    <div class="border p-3 mb-4">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext">{{ bill.name.name }}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Amount (₹)</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext">{{ bill.amount }}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Bill Date</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-plaintext">{{ bill.bill_date|date:"d-m-Y H:i" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Payment Status</label>
+                            <div class="col-sm-8">
+                                {% if bill.status == 0 %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% else %}
+                                    <span class="badge bg-success">Paid</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Action</label>
+                            <div class="col-sm-8">
+                                {% if bill.status == 0 %}
+                                    <a href="{% url 'pay_bill' bill.id %}" class="btn btn-primary btn-sm">PAY NOW</a>
+                                    <a href="{% url 'pay_in_direct' bill.id %}" class="btn btn-secondary btn-sm">PAY DIRECT</a>
+                                {% else %}
+                                    <button class="btn btn-success btn-sm" disabled>Bill Paid</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text-danger">No Bills Available.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

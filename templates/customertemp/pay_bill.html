@@ -1,0 +1,57 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load static %}
+{% block content %}
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">Pay Your Bill</h4>
+
+            <div class="text-center mb-4">
+                <h5>Scan QR to Pay ₹{{ bill.amount }}</h5>
+                <a href="{% url 'customer_home' %}">
+                <img src="{% static 'images/qr.jpg' %}" alt="QR Code" style="width:200px; height:200px;">
+                    </a>
+            </div>
+
+            <div class="text-center mb-4">
+                <h6>OR</h6>
+            </div>
+
+            <h5 class="text-center mb-3">Pay with Card</h5>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="card" class="col-form-label">Card Number</label>
+                    <input class="form-control" type="number" minlength="13" maxlength="16" name="card" id="card" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cvv" class="col-form-label">CVV</label>
+                    <input class="form-control" name="cvv" type="password" minlength="3" maxlength="3" id="cvv" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="exp" class="col-form-label">Expiry Month</label>
+                    <input class="form-control" name="exp" type="month" id="exp" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 btn-block">Pay with Card</button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <a href="{% url 'view_bill_user' %}" class="btn btn-secondary">Back to Bills</a>
+            </div>
+            {% if messages %}
+                  {% for message in messages %}
+                    <div class="alert alert-success">
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

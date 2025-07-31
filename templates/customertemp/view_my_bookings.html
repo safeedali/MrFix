@@ -1,0 +1,131 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .booking-table-container {
+        margin: 40px auto;
+        max-width: 1000px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .booking-header {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 16px;
+        text-align: left;
+        font-size: 15px;
+    }
+
+    th {
+        background: linear-gradient(to right, #007bff, #00c6ff);
+        color: white;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 500;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+        color: #fff;
+    }
+
+    .status-confirmed {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .status-completed {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .pay-btn {
+        background: linear-gradient(to right, #28a745, #00c851);
+        color: white;
+        padding: 6px 14px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .paid-label {
+        background-color: #17a2b8;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 500;
+    }
+</style>
+
+<div class="booking-table-container">
+    <h2 class="booking-header">My Nurse Bookings</h2>
+
+    {% if bookings %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nurse Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Patient Details</th>
+                <th>Status</th>
+                <th>Payment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.nurse.name }}</td>
+                <td>{{ booking.start_time }}</td>
+                <td>{{ booking.end_time }}</td>
+                <td>{{ booking.patient_name }} ({{ booking.patient_age }} yrs)<br>{{ booking.patient_condition }}</td>
+                <td>
+                    <span class="status
+                        {% if booking.status == 'Pending' %}status-pending
+                        {% elif booking.status == 'Confirmed' %}status-confirmed
+                        {% elif booking.status == 'Completed' %}status-completed
+                        {% endif %}">
+                        {{ booking.status }}
+                    </span>
+                </td>
+                <td>
+                    {% if booking.nursebookingpayment %}
+                        <span class="paid-label">Paid ₹{{ booking.nursebookingpayment.amount }}</span>
+                    {% else %}
+                        <a href="{% url 'pay_nurse_booking' booking.id %}" class="pay-btn">Pay Now</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p style="text-align: center;">You have no bookings yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

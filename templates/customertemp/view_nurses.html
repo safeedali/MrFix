@@ -1,0 +1,27 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Available Home Nurses</h2>
+    <div class="row">
+        {% for nurse in nurses %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ nurse.name }}</h5>
+                    <p class="card-text">
+                        <strong>Contact:</strong> {{ nurse.contact_no }}<br>
+                        <strong>Email:</strong> {{ nurse.email }}<br>
+                        <strong>Address:</strong> {{ nurse.address }}<br>
+                    </p>
+                    <a href="{% url 'book_nurse' nurse.id %}" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No nurses available at this time.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

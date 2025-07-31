@@ -1,0 +1,50 @@
+{% extends 'admintemp/admin_home.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Pending Nurse Approvals</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact No</th>
+                <th>Qualification</th>
+                <th>Experience</th>
+                <th>ID Card</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nurse in nurses %}
+            <tr>
+                <td>{{ nurse.name }}</td>
+                <td>{{ nurse.email }}</td>
+                <td>{{ nurse.contact_no }}</td>
+                <td>{{ nurse.qualification }}</td>
+                <td>{{ nurse.experience }} Years</td>
+                <td>
+                    {% if nurse.id_card %}
+                        <a href="{{ nurse.id_card.url }}" target="_blank">
+                            <img src="{{ nurse.id_card.url }}" width="80" height="80" alt="ID Card">
+                        </a>
+                    {% else %}
+                        No ID Card
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'approve_nurse' nurse.id %}" class="btn btn-success btn-sm">Approve</a>
+                    <a href="{% url 'reject_nurse' nurse.id %}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to reject this nurse?')">Reject</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No pending nurse registrations</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

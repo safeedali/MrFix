@@ -1,0 +1,71 @@
+{% extends 'customertemp/customer_home.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .payment-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .payment-container h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .payment-container p {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .payment-container label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .payment-container input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .pay-btn {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        background: linear-gradient(to right, #28a745, #00c851);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .pay-btn:hover {
+        background: linear-gradient(to right, #218838, #009e3d);
+    }
+</style>
+
+<div class="payment-container">
+    <h2>Pay for Nurse Booking</h2>
+    <p><strong>Nurse:</strong> {{ booking.nurse.name }}</p>
+    <p><strong>Booking Date:</strong> {{ booking.date }}</p>
+    <p><strong>Time:</strong> {{ booking.start_time }} - {{ booking.end_time }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label>Amount (₹):</label>
+        <input type="text" name="amount" value="500" readonly><br>
+        <button type="submit" class="pay-btn">Pay Now</button>
+    </form>
+</div>
+{% endblock %}

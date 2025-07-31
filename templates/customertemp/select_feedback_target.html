@@ -1,0 +1,46 @@
+{% extends 'customertemp/customer_home.html' %}
+{% block content %}
+
+<h3>Select Who You Want to Give Feedback To</h3>
+
+<h4>Workers</h4>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+    {% for w in workers %}
+    <tr>
+        <td>{{ w.name }}</td>
+        <td>
+            <a href="{% url 'give_feedback' w.user.id %}" class="btn btn-primary btn-sm">Give Feedback</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No workers found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h4>Nurses</h4>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+    {% for n in nurses %}
+    <tr>
+        <td>{{ n.name }}</td>
+        <td>
+            <a href="{% url 'give_feedback' n.login.id %}" class="btn btn-success btn-sm">Give Feedback</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No nurses found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
